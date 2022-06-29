@@ -47,3 +47,18 @@ hobj |>
   rvest::html_attr("href") -> contain_links
 
 
+# list data
+#
+url  <- "http://19president.pa.go.kr/api/petitions/list"
+bo <- list(
+  c = 0, # 0 = 모두
+  only = 2, # 1 = 진행중 청원 / 2 = 만료된 청원
+  page = 1,
+  order = 1 # 1 = 최신순 / 2 = 추천순
+)
+ah <- httr::add_headers(
+  "X-Requested-With" =  "XMLHttpRequest"
+  )
+
+httr::POST(url, body = bo, ah) |>
+  httr::content() -> tem
